@@ -50,6 +50,19 @@ reuse the reader session above. (Many redundant ones from before this fix
 exist in the account's session list; they're harmless, just clutter — no
 need to clean them up unless asked.)
 
+### Pitfall observed 2026-11-01: this session's own name is not stable
+
+This session's display name (what `ListAgents` shows for it, e.g.
+`awesome-mcp-servers-78`) **changes across runs** — a prior run's
+`fire_trigger` text baked in a name (`awesome-mcp-servers-2c`) that was
+already stale by the time the reader session tried to `SendMessage` back,
+so the report silently failed to deliver and sat unread in the reader
+session for over a week. When composing the `fire_trigger` text, tell the
+reader session explicitly to call `ListAgents` itself, right before sending,
+and use whatever name that call returns — never hardcode this session's
+current name into the instruction text, since it may already be stale by
+the time the reader session acts on it.
+
 Note: `trig_018jnbgaHWPGHqF4A4q7ypTh` itself was created via the web UI
 (`http_api`), not by an agent, so it can only be edited by the user at
 https://claude.ai/code/routines/trig_018jnbgaHWPGHqF4A4q7ypTh — an agent
