@@ -17,18 +17,25 @@ configured for this session" from this session, no matter what's tried.
 `gh pr view` also doesn't work regardless (GraphQL is blocked for these
 sessions) — use `gh api repos/<owner>/<repo>/pulls/<n>` (REST) instead.
 
-## The workaround (set up 2026-10-24)
+## The workaround (set up 2026-10-24, reader recreated 2026-11-10)
 
 A second, dedicated session holds `punkpeye/awesome-mcp-servers` as its
 attached repo and can query PR status/diffs via the GitHub REST API:
 
-- Reader session: `session_01ETsWUTK22Qsa6dD3sY8u4d`
+- Reader session: `session_011UANak9dBp3D9jvWATUp2k`
 - Poke trigger (no schedule of its own, wakes the reader session on demand):
-  `trig_016tskYDtSZ9TvfLWHDgbZeZ`
+  `trig_01MJLugzQoHgH1ekoym3MimY`
+
+(The original pair — `session_01ETsWUTK22Qsa6dD3sY8u4d` /
+`trig_016tskYDtSZ9TvfLWHDgbZeZ` — went unresponsive: frozen
+`connection_status: disconnected` since 2026-10-24 despite multiple pokes
+across two later runs. Recreated fresh per the recovery steps below rather
+than keep poking a stuck session. The old pair is left alone, harmless
+clutter, not deleted.)
 
 To get fresh PR data from this session: call
 `mcp__Claude_Code_Remote__fire_trigger` with
-`trigger_id: "trig_016tskYDtSZ9TvfLWHDgbZeZ"` and a `text` param describing
+`trigger_id: "trig_01MJLugzQoHgH1ekoym3MimY"` and a `text` param describing
 exactly what's needed (e.g. "check status of PRs 13310,13896,...", or "run
 `gh pr diff <n> -R punkpeye/awesome-mcp-servers | grep '^+- \[dockndevai/'`
 and reply with the line"), and tell it to reply via `SendMessage` to this
@@ -38,8 +45,9 @@ turn — it does not come back synchronously.** It's fine to end a run's turn
 without the reply yet; the reply will wake this session again to finish the
 report/healing.
 
-If `session_01ETsWUTK22Qsa6dD3sY8u4d` or `trig_016tskYDtSZ9TvfLWHDgbZeZ` is
-ever gone, recreate: `create_session` with
+If `session_011UANak9dBp3D9jvWATUp2k` or `trig_01MJLugzQoHgH1ekoym3MimY` is
+ever gone (or goes unresponsive again — see the 2026-11-10 pitfall below),
+recreate: `create_session` with
 `source_url: "https://github.com/punkpeye/awesome-mcp-servers"`, then
 `create_trigger` with `persistent_session_id` set to the new session id and
 no `cron_expression`/`run_once_at` (poke-only). Update this file with the new
@@ -99,3 +107,16 @@ so that's still true today unless it was itself wrong/stale. If this
 relay keeps going unanswered on a future run, consider recreating the
 reader session fresh (see "The workaround" above) rather than continuing
 to poke a possibly-stuck one, and update the IDs here.
+
+### Resolution 2026-11-10 (same run): recreated the reader session
+
+The old reader session/trigger pair never answered a third poke either
+(3 total unanswered pokes across this and the prior run), so this run
+recreated the pair fresh per the recovery steps above:
+`session_011UANak9dBp3D9jvWATUp2k` / `trig_01MJLugzQoHgH1ekoym3MimY`
+(IDs above already updated to match). Fired an initial check to the new
+reader session; its reply arrives later as a `<cross-session-message>`
+turn, same async pattern as before. This run's final report is based on
+the last confirmed merged status (2026-10-24) pending that fresh
+confirmation — treat a future run's fresh reply as the authoritative
+update if it contradicts anything here.
