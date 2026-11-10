@@ -120,3 +120,25 @@ turn, same async pattern as before. This run's final report is based on
 the last confirmed merged status (2026-10-24) pending that fresh
 confirmation — treat a future run's fresh reply as the authoritative
 update if it contradicts anything here.
+
+### Confirmed 2026-11-10 (later run, same day): all 8 PRs closed/merged — and a better way to read the reader's result than waiting on SendMessage
+
+A later run the same day called `get_session` on `session_011UANak9dBp3D9jvWATUp2k`
+directly (no poke needed yet) and found it had already run at
+2026-11-10T08:29–08:31 UTC with `post_turn_summary.status_detail`:
+*"all 8 PRs checked: closed and merged; no sibling to relay to"* — i.e. the
+reader did the check but, same as the stuck-relay pattern above, found no
+monitoring session reachable via `ListAgents` at that moment, so its
+`SendMessage` reply never went anywhere. **`get_session`'s
+`post_turn_summary` field on the reader session is a direct, reliable way
+to read its last result without depending on the `SendMessage` relay
+working at all** — prefer checking that first before firing a fresh poke.
+
+This run then fired one more poke anyway (`trig_01MJLugzQoHgH1ekoym3MimY`)
+for an even fresher double-check, with explicit instructions to call
+`ListAgents` right before sending and to override any stale stored
+prompt — that reply, if it lands as a `<cross-session-message>`, is the
+latest authoritative data; otherwise `get_session` on the reader (as
+above) remains the fallback. Status as of this confirmation: **all 8 PRs
+(13310, 13896, 13897, 13900, 13901, 13903, 13904, 14166) are CLOSED and
+MERGED.**
