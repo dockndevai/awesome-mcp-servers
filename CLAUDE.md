@@ -68,3 +68,34 @@ Note: `trig_018jnbgaHWPGHqF4A4q7ypTh` itself was created via the web UI
 https://claude.ai/code/routines/trig_018jnbgaHWPGHqF4A4q7ypTh — an agent
 session can disable it (`enabled=false`) but not rewrite its prompt. That's
 why this workaround lives here instead of in the task's own prompt text.
+
+### Pitfall observed 2026-11-10: `trig_016tskYDtSZ9TvfLWHDgbZeZ`'s own stored prompt is stale, and can't be fixed from here
+
+Calling `get_trigger` on the poke trigger shows its `derived_state.prompt`
+still has old, wrong content baked in from a previous run: a stale date
+claim ("last check was Oct 15") and a hardcoded dead session name
+(`"awesome-mcp-servers-2c"`) to `SendMessage` back to. `update_trigger` on
+it is **refused** with "a routine's instructions (its prompt) can be
+changed only from the conversation or thread the routine posts into, and
+this is not that one" — so this session cannot fix that stored prompt; it
+can only be fixed from inside `session_01ETsWUTK22Qsa6dD3sY8u4d`'s own
+conversation. The per-poke `fire_trigger` `text` param is appended *after*
+that stale stored prompt, not instead of it, so always include in the poke
+text an explicit override telling the reader session to follow the
+appended text over the base prompt, and to call `ListAgents` itself rather
+than trust any name (old or new) in either.
+
+Separately, on this run two `fire_trigger` pokes (~48 minutes apart) to
+`trig_016tskYDtSZ9TvfLWHDgbZeZ` produced no `SendMessage` reply at all.
+`get_session` on `session_01ETsWUTK22Qsa6dD3sY8u4d` showed `updated_at` and
+`post_turn_summary` still frozen at 2026-10-24 (`connection_status:
+disconnected`), and `get_trigger`'s `last_run` only reflects the trigger's
+**creation-time** run from 2026-10-24 — it does not appear to update for
+manual `fire_trigger` pokes, so it's not a reliable way to confirm a poke
+landed. Net effect: this run could not get a live re-check of PR status.
+The last confirmed data point (from that 2026-10-24 session state) is that
+all 8 PRs were MERGED as of then — and GitHub PR merges are irreversible,
+so that's still true today unless it was itself wrong/stale. If this
+relay keeps going unanswered on a future run, consider recreating the
+reader session fresh (see "The workaround" above) rather than continuing
+to poke a possibly-stuck one, and update the IDs here.
