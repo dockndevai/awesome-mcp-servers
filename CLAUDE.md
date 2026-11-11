@@ -174,3 +174,23 @@ still moot since nothing is OPEN to heal. Fired another poke to
 arrives later as `<cross-session-message>`). Conclusion unchanged: all 8
 PRs (13310, 13896, 13897, 13900, 13901, 13903, 13904, 14166) remain
 CLOSED/MERGED — terminal, irreversible state.
+
+### Confirmed again 2026-11-11 (yet another run, same day): still no change
+
+Another run same day. This session's own `gh auth status` still fails
+(`GH_TOKEN` invalid) and `gh api repos/punkpeye/awesome-mcp-servers/pulls/13310`
+still 403's — unchanged from the prior two runs, still moot (nothing OPEN
+to heal). `get_session` on the reader (`session_011UANak9dBp3D9jvWATUp2k`)
+still shows the same terminal `post_turn_summary` from 2026-11-10 ("all 8
+PRs checked: closed and merged"); no newer run recorded there yet. Fired
+another poke to `trig_01MJLugzQoHgH1ekoym3MimY` (with the standing
+override: ignore the trigger's stale stored prompt, call `ListAgents`
+itself right before sending) — reply, if any, arrives later as a
+`<cross-session-message>` turn. Conclusion unchanged and by now
+well-established across 4+ independent checks since 2026-11-10: all 8 PRs
+(13310, 13896, 13897, 13900, 13901, 13903, 13904, 14166) are CLOSED/MERGED
+— terminal, irreversible state. Given how consistently this has held, a
+future run finding the same reader `post_turn_summary` with no newer
+timestamp can treat that alone as sufficient and skip firing yet another
+poke — only poke again if the reader session itself needs to be recreated
+(gone/unresponsive) or a 9th PR is added to monitor.
