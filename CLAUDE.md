@@ -161,3 +161,16 @@ in this session didn't block this run's conclusion. If a future run
 needs this session's own `gh` working again (e.g. a 9th PR gets added to
 monitor), check `gh auth status` first — it was failing outright here,
 not just on the punkpeye repo.
+
+### Confirmed again 2026-11-11 (later run, same day): no change
+
+Later run same day. `get_session` on the reader
+(`session_011UANak9dBp3D9jvWATUp2k`) still shows the same terminal
+`post_turn_summary` from 2026-11-10 ("all 8 PRs checked: closed and
+merged"); no newer run recorded. This session's own `gh auth status`
+still fails (`GH_TOKEN` invalid), same as noted above — not re-chased,
+still moot since nothing is OPEN to heal. Fired another poke to
+`trig_01MJLugzQoHgH1ekoym3MimY` for a fresh double-check (reply, if any,
+arrives later as `<cross-session-message>`). Conclusion unchanged: all 8
+PRs (13310, 13896, 13897, 13900, 13901, 13903, 13904, 14166) remain
+CLOSED/MERGED — terminal, irreversible state.
