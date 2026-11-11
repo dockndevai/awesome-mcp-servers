@@ -142,3 +142,22 @@ latest authoritative data; otherwise `get_session` on the reader (as
 above) remains the fallback. Status as of this confirmation: **all 8 PRs
 (13310, 13896, 13897, 13900, 13901, 13903, 13904, 14166) are CLOSED and
 MERGED.**
+
+### Confirmed again 2026-11-11: still all resolved; this session's own `gh` is broken too (irrelevant — nothing to heal)
+
+This run's `gh auth status` showed `GH_TOKEN` itself is invalid in this
+session (not just the punkpeye-repo-name-collision issue above — `gh api
+repos/punkpeye/awesome-mcp-servers/pulls/13310` also 403'd with the usual
+"not configured for this session"). Didn't chase a fix since it's moot:
+`get_session` on the reader (`session_011UANak9dBp3D9jvWATUp2k`) still
+showed the same terminal `post_turn_summary` from 2026-11-10
+("all 8 PRs checked: closed and merged"), and PR merge/close is
+irreversible, so no fresh data could contradict it anyway. Fired one more
+poke to `trig_01MJLugzQoHgH1ekoym3MimY` for the record (reply, if any,
+arrives later as `<cross-session-message>` — doesn't block this run's
+report since the state is terminal). Since Step 2 (auto-heal) only
+applies to OPEN+CONFLICTING PRs and none are OPEN, the broken `gh` auth
+in this session didn't block this run's conclusion. If a future run
+needs this session's own `gh` working again (e.g. a 9th PR gets added to
+monitor), check `gh auth status` first — it was failing outright here,
+not just on the punkpeye repo.
