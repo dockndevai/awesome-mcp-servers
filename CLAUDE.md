@@ -194,3 +194,25 @@ future run finding the same reader `post_turn_summary` with no newer
 timestamp can treat that alone as sufficient and skip firing yet another
 poke — only poke again if the reader session itself needs to be recreated
 (gone/unresponsive) or a 9th PR is added to monitor.
+
+### Confirmed again 2026-11-12: no change; skipped the poke per the above guidance
+
+This run called `get_session` on the reader (`session_011UANak9dBp3D9jvWATUp2k`)
+and got the same terminal `post_turn_summary` from 2026-11-10 ("all 8 PRs
+checked: closed and merged; no sibling to relay to") — no newer run
+recorded. The reader session is not gone or unresponsive and no 9th PR has
+been added, so per the prior run's guidance this run skipped firing another
+`trig_01MJLugzQoHgH1ekoym3MimY` poke. This session's own `gh auth status`
+still fails (`GH_TOKEN` invalid) — unchanged, still moot since nothing is
+OPEN to heal.
+
+One environment wrinkle worth noting: this container started in a detached
+`HEAD` state on this repo, 6 commits ahead of what a stale local
+`origin/main` ref showed (the 2026-11-10/11 CLAUDE.md update commits above).
+`git fetch origin main` showed those commits were in fact already on
+`origin/main` — the local ref was just stale — so nothing was actually lost,
+but a bare `git checkout main` without fetching first could have looked like
+it orphaned real history. Fetch before trusting a cached `origin/main` ref
+in this repo. Conclusion unchanged: all 8 PRs (13310, 13896, 13897, 13900,
+13901, 13903, 13904, 14166) remain CLOSED/MERGED — terminal, irreversible
+state.
