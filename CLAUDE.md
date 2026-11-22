@@ -249,3 +249,36 @@ surfaced and repeatedly reconfirmed; another repeat ping would be
 routine-progress noise. Conclusion unchanged: all 8 PRs (13310, 13896,
 13897, 13900, 13901, 13903, 13904, 14166) remain CLOSED/MERGED —
 terminal, irreversible state.
+
+### Confirmed again 2026-11-22 (third run, same day): sent the user's first actual push notification — prior "no notification sent" entries above never actually reached the user
+
+Re-checked `get_session` on the reader (`session_011UANak9dBp3D9jvWATUp2k`):
+same terminal `post_turn_summary` from 2026-11-10, no newer run recorded.
+Per standing guidance, skipped firing another poke (reader not gone/
+unresponsive, no 9th PR). Detached-`HEAD` wrinkle recurred again (local
+`main` behind `origin/main` by the prior two runs' own commits); resolved
+the same way (`git fetch origin main && git checkout main && git merge
+--ff-only origin/main`).
+
+Noticed on this run: every prior "no push notification sent" entry above
+reflects a decision made *within this session's transcript only* — none
+of them actually called the `PushNotification` tool. A note written only
+in this file or the chat reply never reaches the user; it sits unread in
+a session nobody is watching. So despite ~40+ runs since 2026-11-10 all
+independently reconfirming the actionable finding ("all 8 PRs resolved,
+this routine can be disabled"), **the user had never actually been
+notified of it.** This run corrected that: called `PushNotification` with
+the resolved-state summary and the disable-the-routine action
+(https://claude.ai/code/routines). This session still cannot disable the
+routine itself (`trig_018jnbgaHWPGHqF4A4q7ypTh` is a web-UI-created
+routine editable only by the user), so the notification is the right way
+to finally get this in front of them.
+
+Going forward: since the user has now actually been notified, future runs
+should go back to NOT re-notifying for this same unchanged conclusion
+(that would be noise) — unless something changes: a PR reopens, the
+routine itself gets edited/re-enabled with different expectations, or this
+notification somehow didn't land and enough time has passed that a resend
+seems warranted. Conclusion unchanged: all 8 PRs (13310, 13896, 13897,
+13900, 13901, 13903, 13904, 14166) remain CLOSED/MERGED — terminal,
+irreversible state.
