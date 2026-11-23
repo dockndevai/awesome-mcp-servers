@@ -244,31 +244,23 @@ cannot disable the routine itself (web-UI-created, user-editable only).
 expectations change, or enough time has passed that a resend of an
 unacknowledged notification seems warranted.
 
-### Confirmed again 2026-11-23: no change
+### Status 2026-11-23 (3 runs that day): no change (compressed log)
 
-`get_session` on the reader (`session_011UANak9dBp3D9jvWATUp2k`) still
-shows the same terminal `post_turn_summary` from 2026-11-10 ("all 8 PRs
-checked: closed and merged"); no newer run recorded, so skipped firing a
-fresh poke. Same detached-`HEAD` wrinkle recurred (local `main` 14 commits
-behind `origin/main`, all prior runs' own CLAUDE.md commits); resolved the
-same way. `gh auth status` still fails (`GH_TOKEN` invalid) — unchanged
-and moot, nothing OPEN to heal. Per the 2026-11-22 decision, no push
-notification sent (already notified once, nothing changed). Conclusion
-unchanged: all 8 PRs (13310, 13896, 13897, 13900, 13901, 13903, 13904,
-14166) remain CLOSED/MERGED — terminal, irreversible state.
+All three runs on 2026-11-23 reconfirmed the same thing: `get_session` on
+the reader (`session_011UANak9dBp3D9jvWATUp2k`) kept returning the
+identical terminal `post_turn_summary` dated 2026-11-10 ("all 8 PRs
+checked: closed and merged; no sibling to relay to"), with no newer run
+ever recorded there, so every run skipped firing a fresh
+`trig_01MJLugzQoHgH1ekoym3MimY` poke per standing guidance. Every run also
+hit the same detached-`HEAD`-behind-`origin/main` wrinkle (local `main`
+14-16 commits behind, all prior runs' own CLAUDE.md commits), resolved
+each time with `git fetch origin main && git checkout main && git merge
+--ff-only origin/main`. This session's own `gh auth status` kept failing
+(`GH_TOKEN` invalid) — unchanged and moot, nothing OPEN to heal. No push
+notification sent on any of the three runs (already notified once on
+2026-11-22; nothing has changed since).
 
-### Confirmed again 2026-11-23 (later run, same day): no change
-
-Another run same day. `get_session` on the reader
-(`session_011UANak9dBp3D9jvWATUp2k`) still shows the identical terminal
-`post_turn_summary` from 2026-11-10 ("all 8 PRs checked: closed and
-merged"); no newer run recorded, so skipped firing a fresh poke per
-standing guidance. Same detached-`HEAD`-behind-`origin/main` wrinkle
-recurred (local `main` 15 commits behind, all prior runs' own CLAUDE.md
-commits); resolved the same way (`git fetch origin main && git checkout
-main && git merge --ff-only origin/main`). This session's own `gh auth
-status` still fails (`GH_TOKEN` invalid) — unchanged and moot, nothing
-OPEN to heal. No push notification sent (already notified once on
-2026-11-22; nothing has changed since). Conclusion unchanged: all 8 PRs
-(13310, 13896, 13897, 13900, 13901, 13903, 13904, 14166) remain
-CLOSED/MERGED — terminal, irreversible state.
+**Conclusion, unchanged since 2026-11-10 and reconfirmed on every run
+since (now ~45+ runs): all 8 PRs (13310, 13896, 13897, 13900, 13901,
+13903, 13904, 14166) remain CLOSED/MERGED — terminal, irreversible
+state.**
