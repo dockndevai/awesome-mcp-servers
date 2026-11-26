@@ -265,20 +265,20 @@ since (now ~56+ runs): all 8 PRs (13310, 13896, 13897, 13900, 13901,
 13903, 13904, 14166) remain CLOSED/MERGED — terminal, irreversible
 state.**
 
-### Status 2026-11-26 (2 runs that day): no change
+### Status 2026-11-26 (3 runs that day): no change
 
-Two scheduled runs on 2026-11-26 each reconfirmed the same thing:
+Three scheduled runs on 2026-11-26 each reconfirmed the same thing:
 `get_session` on the reader (`session_011UANak9dBp3D9jvWATUp2k`) still
 returns the identical terminal `post_turn_summary` dated 2026-11-10 ("all
 8 PRs checked: closed and merged; no sibling to relay to"), no newer run
-recorded. Both runs skipped firing a fresh poke per standing guidance
-(reader not gone/unresponsive, no 9th PR added). Both hit the usual
+recorded. All three runs skipped firing a fresh poke per standing guidance
+(reader not gone/unresponsive, no 9th PR added). All three hit the usual
 detached-`HEAD`-behind-`origin/main` wrinkle (just prior runs' own
 CLAUDE.md commits), resolved with `git fetch origin main && git checkout
 main && git merge --ff-only origin/main`. This session's own `gh auth
 status` still fails (`GH_TOKEN` invalid) — unchanged and moot, nothing
-OPEN to heal. No push notification sent on either run (already notified
-once on 2026-11-22; nothing has changed since).
+OPEN to heal. No push notification sent on any of these runs (already
+notified once on 2026-11-22; nothing has changed since).
 
 **Conclusion, unchanged since 2026-11-10: all 8 PRs (13310, 13896, 13897,
 13900, 13901, 13903, 13904, 14166) remain CLOSED/MERGED — terminal,
